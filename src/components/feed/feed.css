@@ -1,0 +1,8 @@
+.feed {
+    flex: 7;
+    max-width: 700px;
+}
+
+.feedWrapper {
+    padding: 20px;
+}
