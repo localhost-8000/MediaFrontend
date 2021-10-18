@@ -1,29 +1,33 @@
 .login {
     width: 100vw;
     height: 100vh;
-    background-color: #f0f2f5;
+    background-color: #e6fff3c9;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .loginWrapper {
-    width: 70%;
-    height: 70%;
+    width: 80%;
+    max-width: 1000px;
+    height: 80%;
     display: flex;
+    align-items: center;
+    /* border: 1px solid black; */
 }
 
 .loginLeft, .loginRight {
-    flex: 1;
+    width: 50%;
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
 }
 
 .loginLogo {
     font-size: 50px;
     font-weight: 800;
-    color: brown;
+    color: green;
     margin-bottom: 10px;
 }
 
@@ -31,17 +35,131 @@
     font-size: 24px;
 }
 
-.loginBox {
-    height: 300px;
-    padding: 20px;
-    background-color: white;
+.loginRight {
+    padding: 10px;
+    min-width: 260px;
+    height: 100%;
+    max-height: 250px;
+    background-color: #dcffef;
     border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    box-shadow: 0 0 13px 2px rgb(219 220 219);
 }
 
-.loginInput {
+.loginRightTop {
+    /* border: 1px solid black; */
+    margin: 10px 5px;
+    width: 100%;
+    flex: 8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.loginBox {
+    flex: 10;
+    padding: 5px 10px;
+    min-width: 250px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.icon {
+    font-size: 20px;
+}
+
+#input-email-label, #input-pass-label {
+    font-size: 15px;
+}
+
+#input-email, #input-pass {
+    padding-bottom: 4px;
+    font-size: 16px;
+    min-width: 220px;
+    width: 65%;
+}
+
+.MuiFormControl-root {
+    margin-bottom: 8px;
+}
+
+#loginBtn {
+    margin-top: 10px;
+    padding: 5px 16px;
+}
+
+.toRegisterBtn {
+    flex: 2;
+}
+
+/* ==================================================================== */
+
+.loginHr {
+    border: 1px solid black;
+    background-color: black;
+    width: 90%;
+    margin: 4px 0;
+}
+
+/* ================================================================== */
+
+.loginRightBottom {
+    flex: 3;
+    margin: 10px 5px;
+    /* border: 1px solid black; */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#gglBtn {
+    margin-bottom: 20px;
+    min-width: 210px;
+    max-width: 240px;
+    width: 90%;
+    color: white;
+    background-color: #088408de;
+    cursor: pointer;
+}
+
+#fbBtn {
+    margin-top: 20px;
+    min-width: 210px;
+    max-width: 240px;
+    width: 90%;
+    color: white;
+    background-color: #088408de;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 1000px) {
+    .login {
+        overflow-y: scroll;
+    }
+    .loginWrapper {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+    .loginLeft {
+        margin-bottom: 20px;
+        width: 100%;
+    }
+    .loginRight {
+        margin-top: 20px;
+        width: 100%;
+        max-width: 500px;
+    }
+}
+
+/* .loginInput {
     height: 40px;
     border-radius: 10px;
     border: 1px solid gray;
@@ -88,4 +206,4 @@
     font-size: 18px;
     font-weight: 500;
     cursor: pointer;
-}
+} */

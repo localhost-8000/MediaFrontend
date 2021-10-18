@@ -50,15 +50,26 @@
 }
 
 .buttonContainer button {
+    width: 120px;
     padding: 8px 18px;
     font-weight: 500;
     font-size: 15px;
     border-radius: 6px;
     outline: none;
-    border: none;
+    border: 1px solid rgb(51, 161, 51);
     background-color: rgb(181, 224, 181);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .buttonContainer button:hover {
-    box-shadow: 0 0 2px rgb(172, 228, 171);
+    box-shadow: 1px 0px 2px 0px rgb(189 209 189);
+}
+
+#loader {
+    width: 18px;
+    height: 18px;
+    color: rgb(4, 71, 4);
+    margin-right: 7px;
 }

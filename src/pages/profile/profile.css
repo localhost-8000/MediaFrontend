@@ -85,10 +85,12 @@
 
 .profileInfoName {
     font-size: 32px;
+    margin-bottom: 30px;
 }
 
 .profileInfoDesc {
     font-weight: 400;
+    margin: 15px 0 38px 0;
 }
 
 .profileRightBottom {

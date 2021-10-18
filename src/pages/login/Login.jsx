@@ -1,54 +1,42 @@
-import { useRef, useContext } from "react";
-import "./login.css"
-import { loginCall } from "../../apiCalls"
+import "./login.css";
+import { Button, CircularProgress } from '@material-ui/core';
+
+import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext"
-import { CircularProgress } from '@material-ui/core'
+import { firebaseFbLogin, firebaseGoogleLogin } from "../../firebase_app/firebase_auth";
+
 
 export default function Login() {
 
-    const email = useRef();
-    const password = useRef();
-    const { user, isFetching, dispatch } = useContext(AuthContext);
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        loginCall({
-            email: email.current.value,
-            password: password.current.value
-        }, dispatch)
+    const { user, isFbLoading, isGglLoading, dispatch } = useContext(AuthContext);
+
+    const handleGoogleLogin = () => {
+        
+        firebaseGoogleLogin(dispatch);
+        
+    }
+    const handleFbLogin = () => {
+       
+        firebaseFbLogin(dispatch);
+       
     }
     console.log(user);
     return (
         <div className="login">
             <div className="loginWrapper">
                 <div className="loginLeft">
-                    <h3 className="loginLogo">AnkurMedia</h3>
+                    <h3 className="loginLogo">CollegeMedia</h3>
                     <span className="loginDesc">Connect with friends around you.</span>
                 </div>
                 <div className="loginRight">
-                    <form className="loginBox" onSubmit={handleSubmit}>
-                        <input 
-                            type="email" 
-                            placeholder="Email" 
-                            required
-                            className="loginInput" 
-                            ref={email} 
-                        />
-                        <input 
-                            type="password" 
-                            placeholder="Password" 
-                            required 
-                            minLength="6"
-                            className="loginInput" 
-                            ref={password}
-                        />
-                        <button className="loginButton" type="submit" disabled={isFetching}>
-                                {isFetching ? <CircularProgress color="white" size="25px" /> : "Log In"}
-                            </button>
-                        <span className="loginForgot">Forgot Passsword</span>
-                        <button className="loginRegisterButton">
-                            {isFetching ? <CircularProgress color="white" size="25px" /> : "Register here"}
-                        </button>
-                    </form>
+                    <div className="loginRightBottom">
+                        <Button id="gglBtn" variant="contained" onClick={handleGoogleLogin}>
+                            {isGglLoading ? <CircularProgress size="25px" style={{color: "white"}}/> : "Sign in with Google"}
+                        </Button>
+                        <Button id="fbBtn" variant="contained" onClick={handleFbLogin}>
+                            {isFbLoading ? <CircularProgress size="25px" style={{color: "white"}}/> : "Sign in with Facebook"}
+                        </Button>
+                    </div>
                 </div>
             </div>
         </div>

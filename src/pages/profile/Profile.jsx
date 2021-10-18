@@ -1,23 +1,25 @@
+import "./profile.css";
+import { Edit } from "@material-ui/icons";
+
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
+
 import axios from "axios";
 import $ from "jquery";
 
-import Topbar from "../../components/topbar/Topbar";
 import Feed from "../../components/feed/Feed";
-import Rightbar from "../../components/rightbar/Rightbar";
-import "./profile.css";
-import { Edit } from "@material-ui/icons";
-// import { Backdrop, Fade, Modal } from "@material-ui/core";
 import Modal from "../../components/imagePreviewModal/Modal";
+import Rightbar from "../../components/rightbar/Rightbar";
+import Topbar from "../../components/topbar/Topbar";
 
 
 export default function Profile() {
-    const PF = process.env.REACT_APP_PUBLIC_FOLDER
+    const PF = process.env.REACT_APP_PUBLIC_FOLDER;
     const [user, setUser] = useState({});
     const [file, setFile] = useState(null);
-    const username = useParams().username
+    const username = useParams().username;
     const [previewOpened, setPreviewOpened] = useState(false);
+    const [imgType, setImgType] = useState("");
 
     const handlePreviewOpen = () => setPreviewOpened(true);
 
@@ -26,6 +28,7 @@ export default function Profile() {
         $("#coverImg").trigger('click');
         $("#coverImg").on('change', e => {
             setFile(e.target.files[0]);
+            setImgType("cover");
             handlePreviewOpen();
         });
     }
@@ -34,6 +37,7 @@ export default function Profile() {
         $("#profileImg").trigger('click');
         $("#profileImg").on('change', e => {
             setFile(e.target.files[0]);
+            setImgType("profile");
             handlePreviewOpen();
         });
     }
@@ -44,7 +48,7 @@ export default function Profile() {
             setUser(res.data);
         }
         fetchUser();
-    }, [username])
+    }, [username]);
 
     return (
         <>
@@ -52,6 +56,7 @@ export default function Profile() {
                 visibility={previewOpened}
                 setPreviewOpened={setPreviewOpened}
                 imageFile={file}
+                imgType={imgType}
             />
             <Topbar />
             <div className="profile">
@@ -79,8 +84,8 @@ export default function Profile() {
                                 </div>
                             </div>
                             <div className="profileInfo">
-                                <h3 className="profileInfoName">{user.username}</h3>
-                                <h4 className="profileInfoDesc">{user.desc}</h4>
+                                <h3 className="profileInfoName">{user.displayName}</h3>
+                                {/* <h4 className="profileInfoDesc">{user.desc}</h4> */}
                             </div>
                         </div>
                         <div className="profileRightBottom">

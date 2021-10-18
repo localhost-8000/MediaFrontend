@@ -11,6 +11,7 @@ export default function Post({post}) {
     const [like, setLike] = useState(post.likes.length)
     const [isLiked, setIsLiked] = useState(false)
     const [user, setUser] = useState({});
+    const [sideMenuOpened, setSideMenuOpened] = useState(false);
     const { user: currentUser } = useContext(AuthContext);
 
     useEffect(() => {
@@ -36,6 +37,23 @@ export default function Post({post}) {
         setIsLiked(!isLiked)
     }
 
+    const handleDelete = async () => {
+        let postId = post._id;
+        try {
+            await axios.delete("/posts/" + postId, { data: {userId: currentUser._id} })
+            .then((res) => {
+                if(res.status === 200) {
+                    alert("Post deleted");
+                    window.location.reload();
+                } else {
+                    alert("Unknown error occured while deleting!");
+                }
+            })
+        } catch (err) {
+            alert("Unknown error occured while deleting!");
+        }
+    }
+
     return (
         <div className="post">
             <div className="postWrapper">
@@ -47,11 +65,19 @@ export default function Post({post}) {
                                 src={user.profilePicture || PF + "profilePlaceholder.png"} alt=""
                             />
                         </Link>
-                        <span className="postUsername">{user.username}</span>
+                        <span className="postUsername">{user.displayName}</span>
                         <span className="postDate">{format(post.createdAt)}</span>
                     </div>
-                    <div className="postTopRight">
-                        <MoreVert />
+                    <div className="postTopRight" onClick={() => setSideMenuOpened(!sideMenuOpened)}>
+                        {sideMenuOpened && 
+                        (<div className="more" onClick={(e) => e.stopPropagation()}>
+                            <ul>
+                                {(currentUser._id === post.userId) && <li onClick={handleDelete}>Delete post</li>}
+                                <li><Link to={`profile/${user.username}`} style={{textDecoration: "none", color: "black"}}>{user.displayName}'s Profile</Link></li>
+                                <li>Report this post</li>
+                            </ul>
+                        </div>)}
+                        <MoreVert className="moreIcon"/>
                     </div>
                 </div>
                 <div className="postCenter">

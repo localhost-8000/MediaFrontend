@@ -1,12 +1,16 @@
-import { useState, useEffect, useContext } from "react"
-import axios from "axios"
-import Post from "../post/Post"
-import Share from "../share/Share"
-import "./feed.css"
-import { AuthContext } from "../../context/AuthContext"
+import "./feed.css";
 
-export default function Feed({username}) {
-    const [posts, setPosts] = useState([])
+import axios from "axios";
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+
+import Post from "../post/Post";
+import Share from "../share/Share";
+
+
+export default function Feed({ username }) {
+
+    const [posts, setPosts] = useState([]);
     const { user } = useContext(AuthContext);
 
     useEffect(() => {
@@ -20,7 +24,8 @@ export default function Feed({username}) {
             }));
         }
         fetchPosts();
-    }, [username, user._id])
+    }, [username, user._id]);
+    
     return (
         <div className="feed">
             <div className="feedWrapper">

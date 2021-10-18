@@ -1,22 +1,24 @@
-import "./share.css"
-import { PermMedia, Label, EmojiEmotions, Cancel } from '@material-ui/icons'
-import { useContext, useRef, useState } from "react"
-import { AuthContext } from "../../context/AuthContext"
-import axios from "axios"
-import uploadImage from "../../firebase_app/firebaseUpload"
+import "./share.css";
+import { PermMedia, Cancel } from '@material-ui/icons';
+
+import axios from "axios";
+import { useContext, useRef, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
+
+import uploadImage from "../../firebase_app/firebaseUpload";
 
 
 export default function Share() {
 
-    const PF = process.env.REACT_APP_PUBLIC_FOLDER
+    const PF = process.env.REACT_APP_PUBLIC_FOLDER;
     const { user } = useContext(AuthContext);
 
     const desc = useRef();
-    const [file, setFile] = useState(null)
+    const [file, setFile] = useState(null);
     
     const fileHandler = (e) => {
         setFile(e.target.files[0]);
-    }
+    };
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -35,8 +37,8 @@ export default function Share() {
             } catch (err) {
                 console.log(err);
             }
-        })
-    }
+        });
+    };
 
     return (
         <div className="share">
@@ -50,7 +52,7 @@ export default function Share() {
                     <input 
                         type="text" 
                         className="shareInput" 
-                        placeholder={"Share your thoughts.." + user.username.split(" ")[0]}
+                        placeholder={"Share your thoughts.." + user.displayName.split(" ")[0]}
                         ref={desc}
                     />
                 </div>

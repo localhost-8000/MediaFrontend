@@ -86,7 +86,6 @@
 
 .shareImg {
     width: 100%;
-    border: 1px solid black;
     border-radius: 4px;
     object-fit: cover;
 }

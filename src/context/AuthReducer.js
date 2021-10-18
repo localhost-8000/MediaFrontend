@@ -1,24 +1,32 @@
 const AuthReducer = (state, action) => {
+    // console.log('state: ', action.type);
+    // console.log('user: ', action.payload.user);
+    // console.log('loader: ', action.payload.gglLoader);
+
     switch(action.type) {
         case "LOGIN_START":
             return {
                 user: null,
-                isFetching: true,
+                isGglLoading: action.payload.gglLoader,
+                isFbLoading: action.payload.fbLoader,
                 error: false,
             };
 
         case "LOGIN_SUCCESS":
+            sessionStorage.setItem("userData", JSON.stringify(action.payload.user));
             return {
-                user: action.payload,
-                isFetching: false,
+                user: action.payload.user,
+                isGglLoading: false,
+                isFbLoading: false,
                 error: false,
             };
 
         case "LOGIN_FAILURE":
             return {
                 user: null,
-                isFetching: false,
-                error: action.payload,
+                isGglLoading: false,
+                isFbLoading: false,
+                error: action.payload.error,
             };
         
         case "FOLLOW":

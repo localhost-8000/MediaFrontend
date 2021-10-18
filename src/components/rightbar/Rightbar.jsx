@@ -1,15 +1,17 @@
-import "./rightbar.css"
-import {Users} from "../../dummyData"
-import Online from "../online/Online"
-import axios from "axios"
-import { Link } from "react-router-dom" 
-import { useContext, useEffect, useState } from "react"
-import { AuthContext } from "../../context/AuthContext"
-import { Add, Remove } from "@material-ui/icons"
+import "./rightbar.css";
+import { Add, Remove } from "@material-ui/icons";
+
+import Online from "../online/Online";
+
+import axios from "axios";
+import { Link } from "react-router-dom" ;
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function Rightbar({ user }) {
-    const PF = process.env.REACT_APP_PUBLIC_FOLDER
-    const [friends, setFriends] = useState([])
+
+    const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+    const [friends, setFriends] = useState([]);
     const {user: currentUser, dispatch } = useContext(AuthContext);
     const [followed, setFollowed] = useState(currentUser.followings.includes(user?._id));
 
@@ -20,14 +22,31 @@ export default function Rightbar({ user }) {
     useEffect(() => {
         const getFriends = async () => {
             try {
-                const friendList = await axios.get("/users/friends/" + user._id);
+                const friendList = await axios.get("/users/friends/" + user.username);
                 setFriends(friendList.data);
             } catch (err) {
                 console.log(err);
             }
         }
-        getFriends();
-    }, [user])
+        if(user) {
+            getFriends();
+        }
+    }, [user]);
+
+    useEffect(() => {
+        const getAuthUserFriends = async () => {
+            try {
+                const friendList = await axios.get("/users/friends/" + currentUser.username);
+                setFriends(friendList.data);
+                console.log("friendlist: ", friendList.data);
+            } catch (err) {
+                console.error(err);
+            }
+        }
+        if(!user) {
+            getAuthUserFriends();
+        }
+    }, [currentUser])
 
     const handleFollowClick = async (e) => {
         try {
@@ -44,6 +63,8 @@ export default function Rightbar({ user }) {
         setFollowed(!followed);
     }
 
+    console.log("user friends: ", friends);
+
     const HomeRightbar = () => {
         return (
             <>
@@ -57,9 +78,12 @@ export default function Rightbar({ user }) {
                 <div className="rightbarFriends">
                     <h4 className="rightbarTitle">Active now</h4>
                     <ul className="rightbarFriendList">
-                        {Users.map(user => (
-                            <Online key={user.id} user={user} />
-                        ))}
+                        {friends.length === 0 
+                            ? "Oops 😯, you have no followers yet!" 
+                            :friends.map(friend => (
+                                <Online key={friend._id} user={friend} />
+                            ))
+                        }
                     </ul>
                 </div>
             </>
@@ -71,7 +95,7 @@ export default function Rightbar({ user }) {
             <>
             {user.username !== currentUser.username && (
                 <button className="rightbarFollowButton" onClick={handleFollowClick}>
-                    {followed ? "Unfriend": "Friend"}
+                    {followed ? "Unfollow": "Follow"}
                     {followed ? <Remove /> : <Add />}
                 </button>
             )}
@@ -95,21 +119,24 @@ export default function Rightbar({ user }) {
                         </span>
                     </div> */}
                 </div>
-                <h4 className="rightbarTitle">{user.username}'s friends</h4>
+                <h4 className="rightbarTitle">{user.username === currentUser.displayName ? user.displayName : "Your"} followers</h4>
                 <div className="rightbarFollowings">
-                    {friends.map(friend => (
-                        <Link to={"/profile/" + friend.username} style={{textDecoration: "none"}}>
+                    {friends.length === 0 
+                        ? "Oops 😯, no followers yet" 
+                        : friends.map(friend => (
+                            <Link to={"/profile/" + friend.username} style={{textDecoration: "none"}}>
 
-                            <div className="rightbarFollowing">
-                                <img 
-                                    src={friend.profilePicture ? friend.profilePicture : PF + "profilePlaceholder.png"} 
-                                    alt="" 
-                                    className="rightbarFollowingImg"
-                                />
-                                <span className="rightbarFollowingName">{friend.username}</span>
-                            </div>
-                        </Link>
-                    ))}
+                                <div className="rightbarFollowing">
+                                    <img 
+                                        src={friend.profilePicture ? friend.profilePicture : PF + "profilePlaceholder.png"} 
+                                        alt="" 
+                                        className="rightbarFollowingImg"
+                                    />
+                                    <span className="rightbarFollowingName">{friend.displayName}</span>
+                                </div>
+                            </Link>
+                        ))
+                    }
                 </div>
             </>
         )

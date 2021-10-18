@@ -50,6 +50,7 @@
 
 .rightbarTitle {
     margin-bottom: 15px;
+    font-weight: 500;
 }
 
 .rightbarInfo {
@@ -100,10 +101,10 @@
 }
 
 .rightbarFollowButton {
-    margin-top: 30px;
-    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-bottom: 30px;
     border: none;
-    background-color: #1872f2;
+    background-color: #046a39;
     color: white;
     border-radius: 5px;
     padding: 5px 10px;
