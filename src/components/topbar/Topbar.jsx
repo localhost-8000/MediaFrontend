@@ -15,7 +15,7 @@ export default function Topbar() {
         <div className="topbarContainer">
             <div className="topbarLeft">
                 <Link to="/" style={{textDecoration: "none"}}>
-                    <span className="logo">Ankur Media</span>
+                    <span className="logo">CollegeMedia</span>
                 </Link>
             </div>
             <div className="topbarCenter">

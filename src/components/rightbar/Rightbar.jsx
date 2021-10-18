@@ -38,7 +38,7 @@ export default function Rightbar({ user }) {
             try {
                 const friendList = await axios.get("/users/friends/" + currentUser.username);
                 setFriends(friendList.data);
-                console.log("friendlist: ", friendList.data);
+                // console.log("friendlist: ", friendList.data);
             } catch (err) {
                 console.error(err);
             }
@@ -63,7 +63,7 @@ export default function Rightbar({ user }) {
         setFollowed(!followed);
     }
 
-    console.log("user friends: ", friends);
+    // console.log("user friends: ", friends);
 
     const HomeRightbar = () => {
         return (
